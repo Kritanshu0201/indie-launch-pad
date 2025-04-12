@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState } from "react";
+import * as React from "react";
 import { Project, Task } from "@/types";
 import { mockProjects } from "@/data/mockData";
 import { v4 as uuidv4 } from "uuid";
@@ -17,10 +17,10 @@ interface ProjectContextType {
   filterProjects: (status?: string) => Project[];
 }
 
-const ProjectContext = createContext<ProjectContextType | undefined>(undefined);
+const ProjectContext = React.createContext<ProjectContextType | undefined>(undefined);
 
 export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [projects, setProjects] = useState<Project[]>(mockProjects);
+  const [projects, setProjects] = React.useState<Project[]>(mockProjects);
   const { toast } = useToast();
 
   const getProject = (id: string) => {
@@ -156,7 +156,7 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
 };
 
 export const useProjects = () => {
-  const context = useContext(ProjectContext);
+  const context = React.useContext(ProjectContext);
   if (context === undefined) {
     throw new Error("useProjects must be used within a ProjectProvider");
   }
